@@ -108,12 +108,11 @@ export class BrandLogoComponent implements OnInit, OnDestroy {
     const formData = new FormData();
     formData.append('id', this.addForm.value.id);
     formData.append('name', this.addForm.value.name);
-    formData.append('image', this.addForm.value.image);
-
+    formData.append('image', this.fileToUpload, this.fileToUpload.name);
     switch (this.dbOps) {
       case DbOperation.create:
         this._http.postImage(environment.BASE_API_PATH + 'BrandLogo/Save/', formData).subscribe(res => {
-          if (res.IsSuccess) {
+          if (res.isSuccess) {
             this._toaster.success("Record Saved", "BrandLogo Master");
             this.resetForm();
             this.getData();

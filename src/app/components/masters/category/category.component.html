@@ -29,6 +29,51 @@
 
                             <div class="row mb-3">
                                 <label class="col-md-3 col-form-label">
+                                    <span class="required">*</span> Title
+                                </label>
+                                <div class="col-md-7">
+                                    <input type="text" class="form-control" formControlName="title" />
+
+                                    <div class="text-danger mt-1" *ngIf="ctrl['title'].touched && ctrl['title'].invalid">
+                                        <span *ngIf="ctrl['title'].hasError('required')">
+                                            {{ validationMessage['title']?.['required'] }}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <label class="col-md-3 col-form-label">
+                                    <span class="required">*</span> Discount
+                                </label>
+                                <div class="col-md-7">
+                                    <input type="text" class="form-control" formControlName="isSave" />
+
+                                    <div class="text-danger mt-1" *ngIf="ctrl['isSave'].touched && ctrl['isSave'].invalid">
+                                        <span *ngIf="ctrl['isSave'].hasError('required')">
+                                            {{ validationMessage['isSave']?.['required'] }}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <label class="col-md-3 col-form-label">
+                                    <span class="required">*</span> Link
+                                </label>
+                                <div class="col-md-7">
+                                    <input type="text" class="form-control" formControlName="link" />
+
+                                    <div class="text-danger mt-1" *ngIf="ctrl['link'].touched && ctrl['link'].invalid">
+                                        <span *ngIf="ctrl['link'].hasError('required')">
+                                            {{ validationMessage['link']?.['required'] }}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <label class="col-md-3 col-form-label">
                                     <span class="required">*</span> Logo Image
                                 </label>
                                 <div class="col-md-7">

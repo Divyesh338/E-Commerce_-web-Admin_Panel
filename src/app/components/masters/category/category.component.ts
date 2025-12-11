@@ -114,15 +114,15 @@ export class CategoryComponent implements OnInit, OnDestroy {
       link: [
         '',
         [
-          Validators.required,
-          Validators.minLength(20),
-          Validators.maxLength(100),
-          NumericFieldValidators.validNumericfield,
-          NoWhiteSpaceValidators.NoWhiteSpace,
+          // Validators.required,
+          // Validators.minLength(5),
+          // Validators.maxLength(200),
+          // NumericFieldValidators.validNumericfield,
+          // NoWhiteSpaceValidators.NoWhiteSpace,
         ],
       ],
     });
-
+    console.log(this.addForm);
     this.addForm.valueChanges.subscribe(() => {
       this.onValueChanges();
     })
@@ -166,12 +166,15 @@ export class CategoryComponent implements OnInit, OnDestroy {
     formData.append('title', this.addForm.value.title);
     formData.append('IsSave', this.addForm.value.isSave);
     formData.append('link', this.addForm.value.link);
-    formData.append('image', this.addForm.value.image);
 
+    if (this.fileToUpload) {
+      formData.append('image', this.fileToUpload, this.fileToUpload.name);
+    }
+    
     switch (this.dbOps) {
       case DbOperation.create:
         this._http.postImage(environment.BASE_API_PATH + 'Category/Save/', formData).subscribe(res => {
-          if (res.IsSuccess) {
+          if (res.isSuccess) {
             this._toaster.success("Record Saved", "Category Master");
             this.resetForm();
             this.getData();
@@ -241,7 +244,6 @@ export class CategoryComponent implements OnInit, OnDestroy {
     }
     this._http.post(environment.BASE_API_PATH + 'Category/Delete/', obj).subscribe(res => {
       if (res.isSuccess) {
-        debugger;
         this._toaster.success("Record Deleted Successfully", "Category Master");
         this.getData();
       } else {
@@ -254,6 +256,7 @@ export class CategoryComponent implements OnInit, OnDestroy {
     this._http.get(environment.BASE_API_PATH + 'Category/GetAll').subscribe(res => {
       if (res.isSuccess) {
         this.objRows = res.data;
+        debugger;
       } else {
         this._toaster.error(res.errors[0], 'Category Master')
       }

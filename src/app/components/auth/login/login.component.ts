@@ -19,7 +19,8 @@ export class LoginComponent implements OnInit {
   @ViewChild('ngbNav') elnav: any;
   apiUrl = Global.BASE_API_PATH || '';
 
-  constructor(private fb: FormBuilder,
+  constructor(
+    private fb: FormBuilder,
     private _toaster: ToastrService,
     private _http: HttpService,
     private _auth: AuthService

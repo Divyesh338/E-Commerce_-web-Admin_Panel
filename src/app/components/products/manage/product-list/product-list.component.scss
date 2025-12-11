@@ -1,0 +1,21 @@
+.action-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 4px 6px;
+    font-size: 16px;
+    display: inline-flex;
+    align-items: center;
+
+    &:hover {
+        opacity: 0.8;
+    }
+
+    &.edit-btn {
+        color: #28a745; // green
+    }
+
+    &.delete-btn {
+        color: #dc3545; // red
+    }
+}

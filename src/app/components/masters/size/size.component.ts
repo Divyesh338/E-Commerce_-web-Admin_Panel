@@ -159,13 +159,11 @@ export class SizeComponent implements OnInit, OnDestroy {
   }
 
   deleteData(Id: number) {
-    // debugger;
     let obj = {
       id: Id
     }
     this._http.post(environment.BASE_API_PATH + 'SizeMaster/Delete/', obj).subscribe(res => {
       if (res.isSuccess) {
-        debugger;
         this._toaster.success("Record Deleted Successfully", "Size Master");
         this.getData();
       } else {
@@ -177,8 +175,6 @@ export class SizeComponent implements OnInit, OnDestroy {
   getData() {
     this._http.get(environment.BASE_API_PATH + 'SizeMaster/GetAll').subscribe(res => {
       if (res.isSuccess) {
-        // this._toaster.success("Record Saved", "Size Master");
-        // debugger;
         this.objRows = res.data;
       } else {
         this._toaster.error(res.errors[0], 'Size Master')

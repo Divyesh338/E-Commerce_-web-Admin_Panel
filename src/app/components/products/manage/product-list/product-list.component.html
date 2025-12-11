@@ -1,1 +1,41 @@
-<p>product-list works!</p>
+<div class="container-fluid">
+    <div class="card">
+        <div class="col-sm-12">
+            <div class="card-header">
+                <h5>Product List</h5>
+            </div>
+            <div class="card-body">
+                <div class="btn-popup pull-right">
+                    <a class="btn btn-secondary" routerLink="/products/manage/add-product">
+                        Add Product
+                    </a>
+                </div>
+                <div id="batchDelete" class="category-table custom-datatable transaction-datatable useimage">
+                    <div class="table responsive">
+                        <ngx-datatable class="bootstrap" [rows]="objRows" [columnMode]="'force'" [headerHeight]="50"
+                            [footerHeight]="50" [rowHeight]="'auto'" [limit]="5">
+                            <ngx-datatable-column name="Name"></ngx-datatable-column>
+                            <ngx-datatable-column name="Title"></ngx-datatable-column>
+                            <ngx-datatable-column name="Code"></ngx-datatable-column>
+                            <ngx-datatable-column name="Price"></ngx-datatable-column>
+                            <ngx-datatable-column name="Sale Price"></ngx-datatable-column>
+                            <!-- <ngx-datatable-column name="description"></ngx-datatable-column> -->
+                            <ngx-datatable-column name="created Data" prop="createdOn"></ngx-datatable-column>
+                            <ngx-datatable-column name="Actions">
+                                <ng-template ngx-datatable-cell-template let-row="row">
+                                    <button type="button" class="action-btn edit-btn fa-solid fa-pen-to-square"
+                                        (click)="edit(row.id)">
+                                    </button>
+
+                                    <button type="button" class="action-btn delete-btn fa-solid fa-trash"
+                                        (click)="deleteData(row.id)">
+                                    </button>
+                                </ng-template>
+                            </ngx-datatable-column>
+                        </ngx-datatable>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

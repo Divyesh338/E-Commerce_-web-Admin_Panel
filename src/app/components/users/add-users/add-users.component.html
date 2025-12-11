@@ -1,1 +1,76 @@
-<p>add-users works!</p>
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-6 col-md-8">
+            <div class="card user-card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Add User</h5>
+                </div>
+
+                <div class="card-body">
+                    <form [formGroup]="addUserForm" (ngSubmit)="register()">
+
+                        <div class="mb-3">
+                            <label class="form-label">First Name</label>
+                            <input type="text" class="form-control" formControlName="firstName">
+                            <div class="text-danger small"
+                                *ngIf="addUserForm.get('firstName')?.touched && addUserForm.get('firstName')?.invalid">
+                                First Name is required (3–10 characters)
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Last Name</label>
+                            <input type="text" class="form-control" formControlName="lastName">
+                            <div class="text-danger small"
+                                *ngIf="addUserForm.get('lastName')?.touched && addUserForm.get('lastName')?.invalid">
+                                Last Name is required (3–10 characters)
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Email</label>
+                            <input type="email" class="form-control" formControlName="email">
+                            <div class="text-danger small"
+                                *ngIf="addUserForm.get('email')?.touched && addUserForm.get('email')?.invalid">
+                                Valid Email is required
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">User Type</label>
+                            <select class="form-select" formControlName="userTypeId">
+                                <option value="">-- Select User Type --</option>
+                                <option *ngFor="let type of objUserType" [value]="type.id">{{ type.name }}</option>
+                            </select>
+                            <div class="text-danger small" *ngIf="submitted && addUserForm.get('userTypeId')?.invalid">
+                                User Type is required
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Password</label>
+                            <input type="password" class="form-control" formControlName="password">
+                            <div class="text-danger small"
+                                *ngIf="addUserForm.get('password')?.touched && addUserForm.get('password')?.invalid">
+                                Password must contain uppercase, lowercase, number & symbol
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Confirm Password</label>
+                            <input type="password" class="form-control" formControlName="confirmPassword">
+                            <div class="text-danger small"
+                                *ngIf="addUserForm.get('confirmPassword')?.touched && addUserForm.get('confirmPassword')?.invalid">
+                                Must match Password
+                            </div>
+                        </div>
+
+                        <button class="btn btn-primary w-100" type="submit" [disabled]="addUserForm.invalid">
+                            {{buttonText}}
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

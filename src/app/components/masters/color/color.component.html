@@ -1,1 +1,88 @@
-<p>color works!</p>
+<div class="container-fluid">
+    <div class="card">
+        <div class="card-header">
+            <h5>Color Master</h5>
+        </div>
+
+        <div class="card-body tab2-card">
+            <ul ngbNav #nav="ngbNav" class="nav-tabs" activeId="viewtab" (navChange)="tabChange($event)">
+                <!-- ADD TAB -->
+                <li ngbNavItem="addtab">
+                    <a ngbNavLink>Add</a>
+                    <ng-template ngbNavContent>
+                        <form [formGroup]="addForm" (ngSubmit)="Submit()">
+                            <!-- Name -->
+                            <div class="form-group row">
+                                <label class="col-xl-3 col-md-4"><span>*</span>Name</label>
+                                <div class="col-xl-8 col-md-7">
+                                    <input class="form-control" type="text" formControlName="name" />
+                                    <div *ngIf="ctrl['name'].touched && ctrl['name'].invalid" class="text-danger">
+                                        <span *ngIf="ctrl['name'].hasError('required')">
+                                            {{ validationMessage['name']?.['required'] }}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Image Upload -->
+                            <div class="form-group row">
+                                <label class="col-xl-3 col-md-4"><span>*</span>Image (Logo)</label>
+                                <div class="col-xl-8 col-md-7">
+                                    <input class="form-control" type="file" #file (change)="upload(file.files)" />
+
+                                    <img [src]="addedImagePath" alt="added Image" class="imagewidth" />
+                                </div>
+                            </div>
+
+                            <!-- BUTTONS -->
+                            <div class="d-flex justify-content-end mt-3">
+                                <button type="submit" class="btn btn-primary" [disabled]="addForm.invalid">
+                                    {{ buttonText }}
+                                </button>
+
+                                <button type="button" class="btn btn-danger ms-2" (click)="cancelForm()">
+                                    Cancel
+                                </button>
+                            </div>
+                        </form>
+                    </ng-template>
+                </li>
+
+                <!-- VIEW TAB -->
+                <li ngbNavItem="viewtab">
+                    <a ngbNavLink>View</a>
+
+                    <ng-template ngbNavContent>
+                        <div class="table-responsive mt-3">
+                            <ngx-datatable class="bootstrap" [rows]="objRows" [columnMode]="'force'" [headerHeight]="45"
+                                [footerHeight]="45" [rowHeight]="'auto'" [limit]="5">
+                                <ngx-datatable-column name="ID" prop="id"></ngx-datatable-column>
+                                <ngx-datatable-column name="Name" prop="name"></ngx-datatable-column>
+                                <ngx-datatable-column name="Code" prop="code"></ngx-datatable-column>
+                                <ngx-datatable-column name="Created By" prop="createdBy"></ngx-datatable-column>
+                                <ngx-datatable-column name="Modified By" prop="modifiedBy"></ngx-datatable-column>
+                                <ngx-datatable-column name="Created On" prop="createdOn"></ngx-datatable-column>
+                                <ngx-datatable-column name="Modified On" prop="modifiedOn"></ngx-datatable-column>
+
+                                <!-- Action buttons -->
+                                <ngx-datatable-column name="Actions">
+                                    <ng-template ngx-datatable-cell-template let-row="row">
+                                        <button class="btn-icon edit" (click)="edit(row.id)">
+                                            <i class="fa-solid fa-pen-to-square"></i>
+                                        </button>
+
+                                        <button class="btn-icon delete" (click)="deleteData(row.id)">
+                                            <i class="fa-solid fa-trash"></i>
+                                        </button>
+                                    </ng-template>
+                                </ngx-datatable-column>
+                            </ngx-datatable>
+                        </div>
+                    </ng-template>
+                </li>
+            </ul>
+
+            <div [ngbNavOutlet]="nav"></div>
+        </div>
+    </div>
+</div>

@@ -1,1 +1,52 @@
-<p>dashboard works!</p>
+<div class="container-fluid">
+    <div class="row">
+
+        <!-- Reusable Card Widget -->
+        <ng-container *ngFor="let item of stats">
+            <div class="col-xl-3 col-md-6 xl-50">
+                <div class="card o-hidden widget-cards">
+                    <div class="card-body" [ngClass]="item.bg">
+                        <div class="media static-top-widget row">
+
+                            <div class="icons-widgets col-4">
+                                <div class="align-self-center text-center">
+                                    <app-feather-icon [icon]="item.icon" [ngClass]="item.iconClass"></app-feather-icon>
+                                </div>
+                            </div>
+
+                            <div class="media-body col-8">
+                                <span class="m-0">{{ item.title }}</span>
+                                <h3 class="mb-0">
+                                    ₹
+                                    <span class="counter" [CountTo]="count[item.key]" [from]="count['from']"
+                                        [duration]="count['Duration']">
+                                    </span>
+                                    <small>This Year</small>
+                                </h3>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+
+        <!-- Latest Orders -->
+        <div class="col-xl-12 xl-100">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Latest Orders</h5>
+                </div>
+
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <ag-grid-angular style="width: 100%; height: 500px;" class="ag-theme-alpine" [rowData]="rowData"
+                            [columnDefs]="columnDefs" [defaultColDef]="defaultColDef" (gridReady)="onGridReady($event)"
+                            (cellClicked)="onCellClicked($event)" [pagination]="true">
+                        </ag-grid-angular>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

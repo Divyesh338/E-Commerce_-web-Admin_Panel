@@ -2242,7 +2242,7 @@ $header-size: 80px;
   .page-body-wrapper{
     .page-body{
       min-height: calc(100vh - #{$header-size});
-      margin-top: $header-size;
+      margin-top: 0px;
       padding: $page-body-padding;
       position: relative;
       background-color: $light-color;

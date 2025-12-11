@@ -6,7 +6,6 @@ import { SideBarComponent } from './components/side-bar/side-bar.component';
 import { FeatherIconComponent } from './components/feather-icon/feather-icon.component';
 import { BreadCrumbComponent } from './components/bread-crumb/bread-crumb.component';
 import { LayoutComponent } from './components/layout/layout.component';
-import { AppRoutingModule } from "src/app/app-routing.module";
 import { RouterModule } from '@angular/router';
 
 @NgModule({
@@ -20,8 +19,10 @@ import { RouterModule } from '@angular/router';
   ],
   imports: [
     CommonModule,
-    AppRoutingModule,
-    RouterModule
+    RouterModule,
+  ],
+  exports: [
+    FeatherIconComponent
   ]
 })
 export class SharedModule { }

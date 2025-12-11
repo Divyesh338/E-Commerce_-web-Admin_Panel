@@ -1,0 +1,89 @@
+.action-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 4px 6px;
+    font-size: 16px;
+    display: inline-flex;
+    align-items: center;
+
+    &:hover {
+        opacity: 0.8;
+    }
+
+    &.edit-btn {
+        color: #28a745; // green
+    }
+
+    &.delete-btn {
+        color: #dc3545; // red
+    }
+}
+
+/* =============================
+   Full New Modern Form Styles
+============================= */
+
+.user-card {
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.card-header {
+    padding: 18px 20px !important;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.card-body {
+    padding: 25px 28px !important;
+}
+
+/* Better input styling */
+.form-control,
+.form-select {
+    height: 46px;
+    border-radius: 7px;
+    border: 1px solid #d2d6da;
+    background-color: #fff;
+    transition: all .25s ease;
+
+    &:focus {
+        border-color: #0d6efd;
+        box-shadow: 0 0 0 0.18rem rgba(13, 110, 253, 0.15);
+    }
+}
+
+/* Labels */
+.form-label {
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: #333;
+}
+
+/* Error styling */
+.text-danger {
+    margin-top: 3px;
+    font-weight: 500;
+}
+
+/* Submit Button */
+button[type="submit"] {
+    height: 48px;
+    font-size: 16px;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: 0.3s ease;
+
+    &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(13, 110, 253, 0.25);
+    }
+}
+
+/* Responsive */
+@media (max-width: 576px) {
+    .card-body {
+        padding: 18px !important;
+    }
+}

@@ -9,7 +9,7 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AuthModule } from './components/auth/auth.module';
 import { SharedModule } from './shared/shared.module';
 import { RequestInterceptor } from './interceptors/request.interceptor';
-import { ResponseInterceptor } from './interceptors/response.interceptor';
+import { CKEditorModule } from 'ckeditor4-angular';
 
 @NgModule({
   declarations: [AppComponent],
@@ -21,7 +21,8 @@ import { ResponseInterceptor } from './interceptors/response.interceptor';
     ToastrModule.forRoot(),
     HttpClientModule,
     SharedModule,
-    AuthModule
+    AuthModule,
+    CKEditorModule
   ],
   providers: [
     {
