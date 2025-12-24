@@ -21,7 +21,7 @@
 
                                     <div class="text-danger mt-1" *ngIf="ctrl['name'].touched && ctrl['name'].invalid">
                                         <span *ngIf="ctrl['name'].hasError('required')">
-                                            {{ validationMessage['name']?.['required'] }}
+                                            {{ validationMessage['name']['required'] }}
                                         </span>
                                     </div>
                                 </div>
@@ -37,7 +37,7 @@
                                     <div class="text-danger mt-1"
                                         *ngIf="ctrl['title'].touched && ctrl['title'].invalid">
                                         <span *ngIf="ctrl['title'].hasError('required')">
-                                            {{ validationMessage['title']?.['required'] }}
+                                            {{ validationMessage['title']['required'] }}
                                         </span>
                                     </div>
                                 </div>
@@ -53,7 +53,7 @@
                                     <div class="text-danger mt-1"
                                         *ngIf="ctrl['isSave'].touched && ctrl['isSave'].invalid">
                                         <span *ngIf="ctrl['isSave'].hasError('required')">
-                                            {{ validationMessage['isSave']?.['required'] }}
+                                            {{ validationMessage['isSave']['required'] }}
                                         </span>
                                     </div>
                                 </div>
@@ -68,7 +68,7 @@
 
                                     <div class="text-danger mt-1" *ngIf="ctrl['link'].touched && ctrl['link'].invalid">
                                         <span *ngIf="ctrl['link'].hasError('required')">
-                                            {{ validationMessage['link']?.['required'] }}
+                                            {{ validationMessage['link']['required'] }}
                                         </span>
                                     </div>
                                 </div>

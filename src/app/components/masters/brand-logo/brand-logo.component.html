@@ -18,7 +18,7 @@
                                     <input class="form-control" type="text" formControlName="name" />
                                     <div *ngIf="ctrl['name'].touched && ctrl['name'].invalid" class="text-danger">
                                         <span *ngIf="ctrl['name'].hasError('required')">
-                                            {{ validationMessage['name']?.['required'] }}
+                                            {{ validationMessage['name']['required'] }}
                                         </span>
                                     </div>
                                 </div>

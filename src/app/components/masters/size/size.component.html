@@ -17,7 +17,7 @@
                                 <div class="col-xl-3 col-md-4"></div>
                                 <div class="col-xl-8 col-md-7" *ngIf="ctrl['name'].touched && ctrl['name'].invalid">
                                     <span style="color:#dc3545 !important" *ngIf="ctrl['name'].hasError('required')">
-                                        {{validationMessage['name']?.['required']}}
+                                        {{validationMessage['name']['required']}}
                                     </span>
                                     <!-- <div class="text-danger">{{formErrors['name']}}</div> -->
                                 </div>

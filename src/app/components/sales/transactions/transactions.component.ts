@@ -12,7 +12,6 @@ export class TransactionsComponent implements OnInit {
   transactions: any[] = [];
 
   columnDefs = [
-    { headerName: 'Transactions Id', field: 'transactionsId' },
     { headerName: 'Order Id', field: 'orderId' },
     {
       headerName: 'Order Status',

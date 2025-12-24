@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrModule } from 'ngx-toastr';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AuthModule } from './components/auth/auth.module';
@@ -17,7 +17,7 @@ import { CKEditorModule } from 'ckeditor4-angular';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    NgbModule,
+    NgbNavModule,
     ToastrModule.forRoot(),
     HttpClientModule,
     SharedModule,

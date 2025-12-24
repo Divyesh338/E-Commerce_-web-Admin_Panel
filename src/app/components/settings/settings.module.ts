@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { SettingsRoutingModule } from './settings-routing.module';
 import { ProfileComponent } from './profile/profile.component';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 import { SharedModule } from 'src/app/shared/shared.module';
 
 
@@ -15,7 +15,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
     CommonModule,
     SettingsRoutingModule,
     SharedModule,
-    NgbModule
+    NgbNavModule   
   ]
 })
 export class SettingsModule { }
