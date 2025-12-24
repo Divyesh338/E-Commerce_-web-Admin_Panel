@@ -34,7 +34,8 @@
                                 <div class="col-md-7">
                                     <input type="text" class="form-control" formControlName="title" />
 
-                                    <div class="text-danger mt-1" *ngIf="ctrl['title'].touched && ctrl['title'].invalid">
+                                    <div class="text-danger mt-1"
+                                        *ngIf="ctrl['title'].touched && ctrl['title'].invalid">
                                         <span *ngIf="ctrl['title'].hasError('required')">
                                             {{ validationMessage['title']?.['required'] }}
                                         </span>
@@ -49,7 +50,8 @@
                                 <div class="col-md-7">
                                     <input type="text" class="form-control" formControlName="isSave" />
 
-                                    <div class="text-danger mt-1" *ngIf="ctrl['isSave'].touched && ctrl['isSave'].invalid">
+                                    <div class="text-danger mt-1"
+                                        *ngIf="ctrl['isSave'].touched && ctrl['isSave'].invalid">
                                         <span *ngIf="ctrl['isSave'].hasError('required')">
                                             {{ validationMessage['isSave']?.['required'] }}
                                         </span>
@@ -114,13 +116,11 @@
 
                                 <ngx-datatable-column name="Actions">
                                     <ng-template ngx-datatable-cell-template let-row="row">
-                                        <button class="btn-icon edit" (click)="edit(row.id)">
-                                            <i class="fa-solid fa-pen-to-square"></i>
-                                        </button>
+                                        <button class="action-btn edit-btn fa-solid fa-pen-to-square"
+                                            (click)="edit(row.id)"></button>
 
-                                        <button class="btn-icon delete" (click)="deleteData(row.id)">
-                                            <i class="fa-solid fa-trash"></i>
-                                        </button>
+                                        <button class="action-btn delete-btn fa-solid fa-trash"
+                                            (click)="deleteData(row.id)"></button>
                                     </ng-template>
                                 </ngx-datatable-column>
                             </ngx-datatable>

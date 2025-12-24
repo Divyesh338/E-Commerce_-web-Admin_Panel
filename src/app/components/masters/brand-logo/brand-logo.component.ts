@@ -188,6 +188,7 @@ export class BrandLogoComponent implements OnInit, OnDestroy {
     this._http.get(environment.BASE_API_PATH + 'BrandLogo/GetAll').subscribe(res => {
       if (res.isSuccess) {
         // this._toaster.success("Record Saved", "BrandLogo Master");
+        debugger;
         this.objRows = res.data;
       } else {
         this._toaster.error(res.errors[0], 'BrandLogo Master')

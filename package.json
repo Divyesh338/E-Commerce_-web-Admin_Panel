@@ -21,6 +21,7 @@
     "@fortawesome/fontawesome-free": "^7.1.0",
     "@ng-bootstrap/ng-bootstrap": "^13.1.1",
     "@popperjs/core": "^2.11.8",
+    "@stripe/stripe-js": "^8.6.0",
     "@swimlane/ngx-datatable": "^20.1.0",
     "ag-grid-angular": "^29.3.5",
     "ag-grid-community": "^29.3.5",

@@ -1,111 +1,21 @@
-/* ================================
-   FORM STYLES
-================================= */
-.form-group {
-    margin-bottom: 1.5rem;
-
-    label {
-        font-weight: 600;
-
-        span {
-            color: #dc3545;
-            margin-right: 3px;
-        }
-    }
-
-    input.form-control {
-        padding: 0.47rem 0.75rem;
-    }
-
-    .text-danger {
-        font-size: 0.85rem;
-    }
-}
-
-/* Preview Image */
-.imagewidth {
-    width: 100px;
-    height: 100px;
-    object-fit: contain;
-    margin-top: 10px;
-    border: 1px solid #e3e3e3;
-    padding: 4px;
-    border-radius: 6px;
-    background: #fff;
-}
-
-/* ================================
-   TABS
-================================= */
-.nav-tabs {
-    border-bottom: 2px solid #dee2e6;
-
-    .nav-link {
-        font-weight: 600;
-        padding: 10px 20px;
-        color: #495057;
-
-        &.active {
-            color: #0d6efd;
-            border-color: #0d6efd #0d6efd #fff;
-        }
-    }
-}
-
-/* ================================
-   NGX DATATABLE WRAPPER
-================================= */
-.custom-datatable {
-    .ngx-datatable {
-        box-shadow: none;
-        border: 1px solid #dee2e6;
-        border-radius: 6px;
-
-        .datatable-header {
-            background: #f8f9fa;
-            text-transform: capitalize;
-            font-weight: 600;
-        }
-
-        .datatable-row-wrapper {
-            border-bottom: 1px solid #f1f1f1;
-        }
-
-        // img.imagewidth {
-        //   width: 70px;
-        //   height: 70px;
-        // }
-    }
-}
-
-/* ================================
-   ACTION BUTTONS
-================================= */
 .action-btn {
-    border: none;
     background: transparent;
+    border: none;
     cursor: pointer;
-    padding: 5px;
-    font-size: 18px;
-    margin-right: 12px;
-    transition: all 0.2s ease-in-out;
+    padding: 4px 6px;
+    font-size: 16px;
+    display: inline-flex;
+    align-items: center;
 
     &:hover {
-        transform: scale(1.20);
+        opacity: 0.8;
     }
-}
 
-/* Edit */
-.edit-btn {
-    color: #198754; // bootstrap green
-}
+    &.edit-btn {
+        color: #28a745; // green
+    }
 
-/* Delete */
-.delete-btn {
-    color: #dc3545; // bootstrap red
-}
-
-/* Alignment Fix for Buttons */
-.pull-right button {
-    min-width: 100px;
+    &.delete-btn {
+        color: #dc3545; // red
+    }
 }

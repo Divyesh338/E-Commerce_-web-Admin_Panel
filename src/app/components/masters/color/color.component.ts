@@ -8,61 +8,77 @@ import {
   NoWhiteSpaceValidators,
 } from 'src/app/shared/validations/validations.validator';
 import { environment } from 'src/environments/environment';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-color',
   templateUrl: './color.component.html',
-  styleUrls: ['./color.component.scss']
+  styleUrls: ['./color.component.scss'],
 })
 export class ColorComponent implements OnInit, OnDestroy {
   addForm!: FormGroup;
-  buttonText: string = '';
-  dbOps!: DbOperation;
+  buttonText!: string;
+  dbops!: DbOperation;
   objRows: any[] = [];
   objRow: any;
-  addedImagePath: string | undefined = 'assets/images/radhe.png';
-  fileToUpload: any;
-  formErrors: { [key: string]: string } = {
-    name: ''
-  };
-
-  validationMessage: {
-    [key: string]: { [key: string]: string }
-  } = {
-      name: {
-        required: 'Name is required.',
-        minlength: 'Name must be at least 3 characters.',
-        maxlength: 'Name must not exceed 50 characters.',
-        validcharfield: 'Invalid characters.',
-        NoWhiteSpaceValidators: 'Whitespace not allowed.'
-      }
-    };
 
   @ViewChild('nav') elnav: any;
 
-  constructor(
-    private _http: HttpService,
-    private _toaster: ToastrService,
-    private _fb: FormBuilder
-  ) { }
+  formErrors: { [key: string]: string } = {
+    code: '',
+  };
 
-  ngOnInit() {
-    this.setFromState();
+  validationMessage: {
+    [key: string]: { [key: string]: string };
+  } = {
+    name: {
+      required: 'Name is required',
+      minlength: 'Name cannot be less than 3 char long',
+      maxlength: 'Name cannot be more than 10 char long',
+      validCharField: 'Name must be contains char and space only',
+      noWhiteSpaceValidator: 'Only whitespace is not allowed',
+    },
+    code: {
+      required: 'Code is required',
+      minlength: 'Code cannot be less than 6 char long',
+      maxlength: 'Code cannot be more than 10 char long',
+      noWhiteSpaceValidator: 'Only whitespace is not allowed',
+    },
+  };
+
+  constructor(
+    private _httpService: HttpService,
+    private _toastr: ToastrService,
+    private _fb: FormBuilder
+  ) {}
+
+  ngOnInit(): void {
+    this.setFormState();
     this.getData();
   }
 
-  setFromState() {
+  setFormState() {
     this.buttonText = 'Add';
-    this.dbOps = DbOperation.create;
+    this.dbops = DbOperation.create;
+
     this.addForm = this._fb.group({
       id: [0],
       name: [
         '',
         [
           Validators.required,
-          Validators.minLength(1),
+          Validators.minLength(3),
           Validators.maxLength(10),
           CharFieldValidator.validCharfield,
+          NoWhiteSpaceValidators.NoWhiteSpace,
+        ],
+      ],
+      code: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(6),
+          Validators.maxLength(10),
           NoWhiteSpaceValidators.NoWhiteSpace,
         ],
       ],
@@ -70,7 +86,7 @@ export class ColorComponent implements OnInit, OnDestroy {
 
     this.addForm.valueChanges.subscribe(() => {
       this.onValueChanges();
-    })
+    });
   }
 
   onValueChanges() {
@@ -100,138 +116,153 @@ export class ColorComponent implements OnInit, OnDestroy {
       return;
     }
 
-    if (this.dbOps === DbOperation.create && !this.fileToUpload) {
-      this._toaster.error('Please upload a image', "Branch logo master");
-      return;
-    }
-
-    const formData = new FormData();
-    formData.append('id', this.addForm.value.id);
-    formData.append('name', this.addForm.value.name);
-    formData.append('image', this.fileToUpload);
-    debugger;
-    switch (this.dbOps) {
+    switch (this.dbops) {
       case DbOperation.create:
-        this._http.postImage(environment.BASE_API_PATH + 'BrandLogo/Save/', formData).subscribe(res => {
-          if (res.IsSuccess) {
-            this._toaster.success("Record Saved", "BrandLogo Master");
-            this.resetForm();
-            this.getData();
-          } else {
-            this._toaster.error(res.errors[0], 'BrandLogo Master')
-          }
-        })
+        this._httpService
+          .post(
+            environment.BASE_API_PATH + 'ColorMaster/Save/',
+            this.addForm.value
+          )
+          .subscribe((res) => {
+            if (res.isSuccess) {
+              this._toastr.success('Record Saved !!', 'Color Master');
+              this.resetForm();
+            } else {
+              this._toastr.error(res.errors[0], 'Color Master');
+            }
+          });
         break;
-
       case DbOperation.update:
-        this._http.postImage(environment.BASE_API_PATH + 'BrandLogo/Update/', formData).subscribe(res => {
-          if (res.isSuccess) {
-            this._toaster.success("Record Saved", "BrandLogo Master");
-            this.resetForm();
-            this.getData();
-          } else {
-            this._toaster.error(res.errors[0], 'BrandLogo Master')
-          }
-        })
+        this._httpService
+          .post(
+            environment.BASE_API_PATH + 'ColorMaster/Update/',
+            this.addForm.value
+          )
+          .subscribe((res) => {
+            if (res.isSuccess) {
+              this._toastr.success('Record Updated !!', 'Color Master');
+              this.resetForm();
+            } else {
+              this._toastr.error(res.errors[0], 'Color Master');
+            }
+          });
         break;
     }
   }
 
   resetForm() {
-    this.addForm.reset(
-      {
-        id: 0,
-        name: ''
-      }
-    );
+    this.addForm.reset({
+      id: 0,
+      name: '',
+      code: '',
+    });
+
     this.buttonText = 'Add';
-    this.addedImagePath = 'assets/images/radhe.png';
-    this.dbOps = DbOperation.create;
+    this.dbops = DbOperation.create;
+    this.getData();
     this.elnav.select('viewtab');
   }
 
   cancelForm() {
-    this.addForm.reset(
-      {
-        id: 0,
-        name: ''
-      }
-    );
+    this.addForm.reset({
+      id: 0,
+      name: '',
+      code: '',
+    });
+
     this.buttonText = 'Add';
-    this.addedImagePath = 'assets/images/radhe.png';
-    this.dbOps = DbOperation.create;
-  }
-
-  edit(id: number) {
-    this.buttonText = 'Update';
-    this.dbOps = DbOperation.update;
-    this.elnav.select('addtab');
-    this.objRow = this.objRows.find(x => x.id === id);
-    this.addedImagePath = this.objRow.imagePath;
-    this.addForm.patchValue(this.objRow);
-  }
-
-  deleteData(Id: number) {
-    let obj = {
-      id: Id
-    }
-    this._http.post(environment.BASE_API_PATH + 'BrandLogo/Delete/', obj).subscribe(res => {
-      if (res.isSuccess) {
-        this._toaster.success("Record Deleted Successfully", "BrandLogo Master");
-        this.getData();
-      } else {
-        this._toaster.error(res.errors[0], 'BrandLogo Master')
-      }
-    })
+    this.dbops = DbOperation.create;
+    this.elnav.select('viewtab');
   }
 
   getData() {
-    this._http.get(environment.BASE_API_PATH + 'ColorMaster/GetAll').subscribe(res => {
-      if (res.isSuccess) {
-        // this._toaster.success("Record Saved", "BrandLogo Master");
-        this.objRows = res.data;
-      } else {
-        this._toaster.error(res.errors[0], 'BrandLogo Master')
-      }
-    })
+    this._httpService
+      .get(environment.BASE_API_PATH + 'ColorMaster/GetAll')
+      .subscribe((res) => {
+        if (res.isSuccess) {
+          this.objRows = res.data;
+        } else {
+          this._toastr.error(res.errors[0], 'Color Master');
+        }
+      });
+  }
+
+  Edit(id: number) {
+    this.buttonText = 'Update';
+    this.dbops = DbOperation.update;
+    this.elnav.select('addtab');
+
+    this.objRow = this.objRows.find((x) => x.id === id);
+    this.addForm.patchValue(this.objRow);
+  }
+
+  Delete(id: number) {
+    let obj = {
+      id: id,
+    };
+
+    const swalWithBootstrapButtons = Swal.mixin({
+      customClass: {
+        confirmButton: 'btn btn-success',
+        cancelButton: 'btn btn-danger',
+      },
+      buttonsStyling: false,
+    });
+
+    swalWithBootstrapButtons
+      .fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Yes, delete it!',
+        cancelButtonText: 'No, cancel!',
+        reverseButtons: true,
+      })
+      .then((result) => {
+        if (result.isConfirmed) {
+          this._httpService
+            .post(environment.BASE_API_PATH + 'ColorMaster/Delete/', obj)
+            .subscribe((res) => {
+              if (res.isSuccess) {
+                //this._toastr.success("Record Deleted !!", "Color Master");
+                swalWithBootstrapButtons.fire(
+                  'Deleted!',
+                  'Your record has been deleted.',
+                  'success'
+                );
+                this.getData();
+              } else {
+                this._toastr.error(res.errors[0], 'Color Master');
+              }
+            });
+        } else if (
+          /* Read more about handling dismissals below */
+          result.dismiss === Swal.DismissReason.cancel
+        ) {
+          swalWithBootstrapButtons.fire(
+            'Cancelled',
+            'Your record is safe :)',
+            'error'
+          );
+        }
+      });
+  }
+
+  ngOnDestroy() {
+    this.objRows = [];
+    this.objRow = null;
   }
 
   tabChange(event: any) {
-    this.addForm.reset(
-      {
-        id: 0,
-        name: ''
-      }
-    );
+    //console.log(event);
+    this.addForm.reset({
+      id: 0,
+      name: '',
+      code: '',
+    });
+
     this.buttonText = 'Add';
-    this.dbOps = DbOperation.create;
-  }
-
-  upload(files: any) {
-    console.log(files);
-    if (!files.length) {
-      return;
-    }
-
-    let type = files[0].type
-
-    if (type.match(/image\/*/) == null) {
-      this._toaster.error('Please upload a valid Image', "Brand logo master");
-      this.addedImagePath = 'assets/images/radhe.png';
-    }
-
-    this.fileToUpload = files[0];
-
-    //read image
-    let reader = new FileReader();
-    reader.readAsDataURL(files[0]);
-    reader.onload = () => {
-      this.addedImagePath = reader.result?.toString();
-    }
-  }
-
-  ngOnDestroy(): void {
-    this.objRows = [];
-    this.objRow = null
+    this.dbops = DbOperation.create;
   }
 }
