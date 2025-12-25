@@ -60,6 +60,7 @@ It focuses on **dynamic component rendering**: UI pages/forms/components are gen
 
 ## Project structure
 
+```text
 src/app/
 ├── components/
 │   ├── auth/
@@ -87,7 +88,7 @@ src/app/
 │   ├── utility/
 │   └── validations/
 
----
+```
 
 ## run-development
  # Requirements
