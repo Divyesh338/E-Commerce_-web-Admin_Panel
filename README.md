@@ -31,26 +31,130 @@ It focuses on **dynamic component rendering**: UI pages/forms/components are gen
 
 ## Features
 
-- Dynamic UI rendering from JSON configuration (forms, tables, cards, widgets).
-- Modular & lazy-loaded Angular modules (Products, Orders, Users, Dashboard, Settings).
-- Role-based UI (Admin / Manager / Editor).
-- CRUD operations scaffolding with reusable components.
-- Responsive layout with collapsible sidebar and header.
-- Service-based data access with RxJS & Observables.
-- Easy to extend: add components to registry and use them in configs.
-
+- Config-driven sidebar navigation with multi-level menus
+- Lazy-loaded Angular feature modules
+- Centralized layout (Header, Sidebar, Breadcrumb, Footer)
+- Modular architecture for large admin systems
+- REST API integration (.NET backend)
+- Responsive UI using Bootstrap 5
+- Reusable shared components
+- HTTP interceptors for request/response handling
+- Easily extendable admin features
 ---
 
 ## Tech stack
 
-- Angular 15
+- Angular: 15
 - TypeScript
 - RxJS
-- SCSS for styling
-- Angular Router (lazy-loaded modules)
-- Optional: Angular Material (or your custom UI library)
-
+- SCSS + Bootstrap 5
+- Angular Router (lazy loading)
+- ng-bootstrap
+- ag-Grid / ngx-datatable
+- SweetAlert2, ngx-toastr
+- CKEditor 4
+- Feather Icons & FontAwesome
 ---
 
 ## Project structure
+
+src/app/
+├── components/
+│   ├── auth/
+│   ├── dashboard/
+│   ├── products/
+│   ├── sales/
+│   ├── masters/
+│   ├── users/
+│   ├── reports/
+│   ├── invoice/
+│   └── settings/
+│
+├── interceptors/
+│   ├── request/
+│   └── response/
+│
+├── shared/
+│   ├── components/
+│   │   ├── header/
+│   │   ├── side-bar/
+│   │   ├── footer/
+│   │   ├── layout/
+│   │   └── bread-crumb/
+│   ├── interfaces/
+│   ├── routes/
+│   ├── services/
+│   ├── utility/
+│   └── validations/
+
+## run-development
+ # Requirements
+  - Node.js: v18.20.8
+  - npm: v10.8.2
+  - Angular CLI: 15.2.11
+  - Install dependencies
+  - npm install
+
+ # Run (development)
+  - ng serve
+
+ # Open in browser:
+  - http://localhost:4200
+
+ # Build
+ - ng build --configuration production
+ - Output directory: dist/
+
+ - Known build warnings
+ - SCSS budget warning (header component)
+ - CommonJS warnings:
+ - sweetalert2
+ - feather-icons
+ - Initial bundle size exceeds default Angular budget
+ - These warnings do not block production builds.
+
+ ## dynamic-component-rendering---how-it-works
+  - AlibabaPro uses configuration-driven rendering at the routing and navigation level.
+
+  - Menu / Route config
+        ↓
+  - Layout component
+        ↓
+  - Lazy-loaded feature module
+        ↓
+  - Feature components render dynamically
+
+
+  ## config-example-json
+
+  - MENUITEMS = [
+    {
+      title: 'Products',
+      icon: 'box',
+      type: 'menu',
+      children: [
+        {
+          title: 'Manage',
+          type: 'menu',
+          children: [
+            {
+              title: 'Product List',
+              type: 'link',
+            path: 'products/manage/product-list'
+            },
+            {
+              title: 'Add Product',
+              type: 'link',
+              path: 'products/manage/add-product'
+            }
+          ]
+        }
+      ]
+    }
+  ];
+
+  # Dynamic behavior is currently achieved through:
+    - Angular routing
+    - Lazy-loaded feature modules
+    - Config-driven navigation
 
