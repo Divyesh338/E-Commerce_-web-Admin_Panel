@@ -23,7 +23,7 @@
 }
 
 .card-header {
-    padding: 15px 20px;
+  padding: 15px 20px;
 }
 
 /* Preview Image */
@@ -50,8 +50,9 @@
     color: #495057;
 
     &.active {
-      color: #0d6efd;
-      border-color: #0d6efd #0d6efd #fff;
+      background: #0d6efd;
+      color: #fff;
+      border-radius: 5px 5px 0 0;
     }
   }
 }

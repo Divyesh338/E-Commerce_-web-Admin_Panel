@@ -23,3 +23,19 @@
 .card-header {
     padding: 15px 20px;
 }
+
+.nav-tabs {
+  border-bottom: 2px solid #dee2e6;
+
+  .nav-link {
+    font-weight: 600;
+    padding: 10px 20px;
+    color: #495057;
+
+    &.active {
+      background: #0d6efd;
+      color: #fff;
+      border-radius: 5px 5px 0 0;
+    }
+  }
+}

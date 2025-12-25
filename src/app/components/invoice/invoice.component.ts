@@ -87,6 +87,6 @@ export class InvoiceComponent {
   }
 
   onCellClicked(e: CellClickedEvent): void {
-    console.log('Cell clicked', e);
+    // console.log('Cell clicked', e);
   }
 }

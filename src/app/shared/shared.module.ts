@@ -12,6 +12,8 @@ import { CountToModule } from 'angular-count-to';
 import { AgGridModule } from 'ag-grid-angular';
 import { ToastrModule } from 'ngx-toastr';
 import { HttpClientModule } from '@angular/common/http';
+import { AdminLayoutComponent } from './components/layout/admin-layout/admin-layout.component';
+import { AuthLayoutComponent } from './components/layout/auth-layout/auth-layout.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +23,8 @@ import { HttpClientModule } from '@angular/common/http';
     FeatherIconComponent,
     BreadCrumbComponent,
     LayoutComponent,
+    AdminLayoutComponent,
+    AuthLayoutComponent,
   ],
   imports: [
     CommonModule,

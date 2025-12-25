@@ -12,7 +12,7 @@ import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-brand-logo',
   templateUrl: './brand-logo.component.html',
-  styleUrls: ['./brand-logo.component.scss']
+  styleUrls: ['./brand-logo.component.scss'],
 })
 export class BrandLogoComponent implements OnInit, OnDestroy {
   addForm!: FormGroup;
@@ -23,20 +23,20 @@ export class BrandLogoComponent implements OnInit, OnDestroy {
   addedImagePath: string | undefined = 'assets/images/radhe.png';
   fileToUpload: any;
   formErrors: { [key: string]: string } = {
-    name: ''
+    name: '',
   };
 
   validationMessage: {
-    [key: string]: { [key: string]: string }
+    [key: string]: { [key: string]: string };
   } = {
-      name: {
-        required: 'Name is required.',
-        minlength: 'Name must be at least 3 characters.',
-        maxlength: 'Name must not exceed 50 characters.',
-        validcharfield: 'Invalid characters.',
-        NoWhiteSpaceValidators: 'Whitespace not allowed.'
-      }
-    };
+    name: {
+      required: 'Name is required.',
+      minlength: 'Name must be at least 3 characters.',
+      maxlength: 'Name must not exceed 50 characters.',
+      validcharfield: 'Invalid characters.',
+      NoWhiteSpaceValidators: 'Whitespace not allowed.',
+    },
+  };
 
   @ViewChild('nav') elnav: any;
 
@@ -44,7 +44,7 @@ export class BrandLogoComponent implements OnInit, OnDestroy {
     private _http: HttpService,
     private _toaster: ToastrService,
     private _fb: FormBuilder
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.setFromState();
@@ -70,7 +70,7 @@ export class BrandLogoComponent implements OnInit, OnDestroy {
 
     this.addForm.valueChanges.subscribe(() => {
       this.onValueChanges();
-    })
+    });
   }
 
   onValueChanges() {
@@ -101,7 +101,7 @@ export class BrandLogoComponent implements OnInit, OnDestroy {
     }
 
     if (this.dbOps === DbOperation.create && !this.fileToUpload) {
-      this._toaster.error('Please upload a image', "Branch logo master");
+      this._toaster.error('Please upload a image', 'Branch logo master');
       return;
     }
 
@@ -111,38 +111,40 @@ export class BrandLogoComponent implements OnInit, OnDestroy {
     formData.append('image', this.fileToUpload, this.fileToUpload.name);
     switch (this.dbOps) {
       case DbOperation.create:
-        this._http.postImage(environment.BASE_API_PATH + 'BrandLogo/Save/', formData).subscribe(res => {
-          if (res.isSuccess) {
-            this._toaster.success("Record Saved", "BrandLogo Master");
-            this.resetForm();
-            this.getData();
-          } else {
-            this._toaster.error(res.errors[0], 'BrandLogo Master')
-          }
-        })
+        this._http
+          .postImage(environment.BASE_API_PATH + 'BrandLogo/Save/', formData)
+          .subscribe((res) => {
+            if (res.isSuccess) {
+              this._toaster.success('Record Saved', 'BrandLogo Master');
+              this.resetForm();
+              this.getData();
+            } else {
+              this._toaster.error(res.errors[0], 'BrandLogo Master');
+            }
+          });
         break;
 
       case DbOperation.update:
-        this._http.postImage(environment.BASE_API_PATH + 'BrandLogo/Update/', formData).subscribe(res => {
-          if (res.isSuccess) {
-            this._toaster.success("Record Saved", "BrandLogo Master");
-            this.resetForm();
-            this.getData();
-          } else {
-            this._toaster.error(res.errors[0], 'BrandLogo Master')
-          }
-        })
+        this._http
+          .postImage(environment.BASE_API_PATH + 'BrandLogo/Update/', formData)
+          .subscribe((res) => {
+            if (res.isSuccess) {
+              this._toaster.success('Record Saved', 'BrandLogo Master');
+              this.resetForm();
+              this.getData();
+            } else {
+              this._toaster.error(res.errors[0], 'BrandLogo Master');
+            }
+          });
         break;
     }
   }
 
   resetForm() {
-    this.addForm.reset(
-      {
-        id: 0,
-        name: ''
-      }
-    );
+    this.addForm.reset({
+      id: 0,
+      name: '',
+    });
     this.buttonText = 'Add';
     this.addedImagePath = 'assets/images/radhe.png';
     this.dbOps = DbOperation.create;
@@ -150,12 +152,10 @@ export class BrandLogoComponent implements OnInit, OnDestroy {
   }
 
   cancelForm() {
-    this.addForm.reset(
-      {
-        id: 0,
-        name: ''
-      }
-    );
+    this.addForm.reset({
+      id: 0,
+      name: '',
+    });
     this.buttonText = 'Add';
     this.addedImagePath = 'assets/images/radhe.png';
     this.dbOps = DbOperation.create;
@@ -165,44 +165,47 @@ export class BrandLogoComponent implements OnInit, OnDestroy {
     this.buttonText = 'Update';
     this.dbOps = DbOperation.update;
     this.elnav.select('addtab');
-    this.objRow = this.objRows.find(x => x.id === id);
+    this.objRow = this.objRows.find((x) => x.id === id);
     this.addedImagePath = this.objRow.imagePath;
     this.addForm.patchValue(this.objRow);
   }
 
   deleteData(Id: number) {
     let obj = {
-      id: Id
-    }
-    this._http.post(environment.BASE_API_PATH + 'BrandLogo/Delete/', obj).subscribe(res => {
-      if (res.isSuccess) {
-        this._toaster.success("Record Deleted Successfully", "BrandLogo Master");
-        this.getData();
-      } else {
-        this._toaster.error(res.errors[0], 'BrandLogo Master')
-      }
-    })
+      id: Id,
+    };
+    this._http
+      .post(environment.BASE_API_PATH + 'BrandLogo/Delete/', obj)
+      .subscribe((res) => {
+        if (res.isSuccess) {
+          this._toaster.success(
+            'Record Deleted Successfully',
+            'BrandLogo Master'
+          );
+          this.getData();
+        } else {
+          this._toaster.error(res.errors[0], 'BrandLogo Master');
+        }
+      });
   }
 
   getData() {
-    this._http.get(environment.BASE_API_PATH + 'BrandLogo/GetAll').subscribe(res => {
-      if (res.isSuccess) {
-        // this._toaster.success("Record Saved", "BrandLogo Master");
-        debugger;
-        this.objRows = res.data;
-      } else {
-        this._toaster.error(res.errors[0], 'BrandLogo Master')
-      }
-    })
+    this._http
+      .get(environment.BASE_API_PATH + 'BrandLogo/GetAll')
+      .subscribe((res) => {
+        if (res.isSuccess) {
+          this.objRows = res.data;
+        } else {
+          this._toaster.error(res.errors[0], 'BrandLogo Master');
+        }
+      });
   }
 
   tabChange(event: any) {
-    this.addForm.reset(
-      {
-        id: 0,
-        name: ''
-      }
-    );
+    this.addForm.reset({
+      id: 0,
+      name: '',
+    });
     this.buttonText = 'Add';
     this.dbOps = DbOperation.create;
   }
@@ -212,10 +215,10 @@ export class BrandLogoComponent implements OnInit, OnDestroy {
       return;
     }
 
-    let type = files[0].type
+    let type = files[0].type;
 
     if (type.match(/image\/*/) == null) {
-      this._toaster.error('Please upload a valid Image', "Brand logo master");
+      this._toaster.error('Please upload a valid Image', 'Brand logo master');
       this.addedImagePath = 'assets/images/radhe.png';
     }
 
@@ -226,11 +229,11 @@ export class BrandLogoComponent implements OnInit, OnDestroy {
     reader.readAsDataURL(files[0]);
     reader.onload = () => {
       this.addedImagePath = reader.result?.toString();
-    }
+    };
   }
 
   ngOnDestroy(): void {
     this.objRows = [];
-    this.objRow = null
+    this.objRow = null;
   }
 }

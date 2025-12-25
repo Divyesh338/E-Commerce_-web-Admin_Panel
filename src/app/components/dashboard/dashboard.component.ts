@@ -33,75 +33,108 @@ export class DashboardComponent {
 
   orderStatusChart: any;
 
-  stats: { title: string; key: keyof Count; bg: string; icon: string; iconClass: string }[] = [
-    { title: "Orders", key: "Orders", bg: "bg-warning", icon: "navigation", iconClass: "font-secondary" },
-    { title: "Shipping Amount", key: "ShoppingAmount", bg: "bg-secondary", icon: "box", iconClass: "font-secondary" },
-    { title: "Cash On Delivery", key: "CashOnDelivery", bg: "bg-primary", icon: "message-square", iconClass: "font-primary" },
-    { title: "Cancelled", key: "Cancelled", bg: "bg-danger", icon: "users", iconClass: "font-danger" }
+  stats: {
+    title: string;
+    key: keyof Count;
+    bg: string;
+    icon: string;
+    iconClass: string;
+  }[] = [
+    {
+      title: 'Orders',
+      key: 'Orders',
+      bg: 'bg-warning',
+      icon: 'navigation',
+      iconClass: 'font-secondary',
+    },
+    {
+      title: 'Shipping Amount',
+      key: 'ShoppingAmount',
+      bg: 'bg-secondary',
+      icon: 'box',
+      iconClass: 'font-secondary',
+    },
+    {
+      title: 'Cash On Delivery',
+      key: 'CashOnDelivery',
+      bg: 'bg-primary',
+      icon: 'message-square',
+      iconClass: 'font-primary',
+    },
+    {
+      title: 'Cancelled',
+      key: 'Cancelled',
+      bg: 'bg-danger',
+      icon: 'users',
+      iconClass: 'font-danger',
+    },
   ];
 
   // AG Grid
   public columnDefs: ColDef[] = [
     {
       field: 'orderId',
-      headerName: 'Order ID'
+      headerName: 'Order ID',
     },
     {
       field: 'invoiceNo',
-      headerName: 'Invoice No'
+      headerName: 'Invoice No',
     },
     {
       field: 'paymentStatus',
       headerName: 'Payment Status',
-      cellRenderer: (params: any) => params.value
+      cellRenderer: (params: any) => params.value,
     },
     {
       field: 'paymentMethod',
-      headerName: 'Payment Method'
+      headerName: 'Payment Method',
     },
     {
       field: 'orderStatus',
       headerName: 'Order Status',
-      cellRenderer: (params: any) => params.value
+      cellRenderer: (params: any) => params.value,
     },
     {
       field: 'subTotalAmount',
-      headerName: 'Sub Total'
+      headerName: 'Sub Total',
     },
     {
       field: 'shippingAmount',
-      headerName: 'Shipping Amount'
+      headerName: 'Shipping Amount',
     },
     {
       field: 'totalAmount',
-      headerName: 'Total Amount'
+      headerName: 'Total Amount',
     },
     {
       field: 'paymentDate',
       headerName: 'Payment Date',
       valueFormatter: (params) => {
         const date = new Date(params.value);
-        return date.toLocaleDateString('en-GB', {
-          day: '2-digit', month: 'short', year: 'numeric'
-        }) + ' ' + date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-      }
-    }
+        return (
+          date.toLocaleDateString('en-GB', {
+            day: '2-digit',
+            month: 'short',
+            year: 'numeric',
+          }) +
+          ' ' +
+          date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+        );
+      },
+    },
   ];
 
   public defaultColDef: ColDef = {
     sortable: true,
     filter: true,
-    resizable: true
+    resizable: true,
   };
 
   public rowData: any[] = [];
 
   @ViewChild(AgGridAngular) agGrid!: AgGridAngular;
 
-  constructor(
-    private _http: HttpService,
-    private _toaster: ToastrService
-  ) { }
+  constructor(private _http: HttpService, private _toaster: ToastrService) {}
 
   ngOnInit() {
     this.getNetFigure();
@@ -110,7 +143,8 @@ export class DashboardComponent {
   }
 
   getNetFigure() {
-    this._http.get(environment.BASE_API_PATH + 'PaymentMaster/GetReportNetFigure')
+    this._http
+      .get(environment.BASE_API_PATH + 'PaymentMaster/GetReportNetFigure')
       .subscribe((res: any) => {
         if (res.isSuccess && res.data.length > 0) {
           const data = res.data[0];
@@ -119,7 +153,10 @@ export class DashboardComponent {
           this.count.CashOnDelivery = data.cashOnDelivery;
           this.count.Cancelled = data.cancelled;
         } else {
-          this._toaster.error(res.errors?.[0] || 'Error fetching data', 'Dashboard');
+          this._toaster.error(
+            res.errors?.[0] || 'Error fetching data',
+            'Dashboard'
+          );
         }
       });
   }
@@ -128,92 +165,105 @@ export class DashboardComponent {
     this.agGrid.api = params.api;
     this.agGrid.columnApi = params.columnApi;
 
-    this._http.get(environment.BASE_API_PATH + 'PaymentMaster/GetReportManageOrder')
+    this._http
+      .get(environment.BASE_API_PATH + 'PaymentMaster/GetReportManageOrder')
       .subscribe((res: any) => {
         if (res.isSuccess) {
           this.rowData = res.data;
         } else {
-          this._toaster.error(res.errors?.[0] || 'Error fetching orders', 'Dashboard');
+          this._toaster.error(
+            res.errors?.[0] || 'Error fetching orders',
+            'Dashboard'
+          );
         }
       });
   }
 
-  onCellClicked(e: CellClickedEvent): void {
-    console.log('Cell clicked', e);
-  }
+  onCellClicked(e: CellClickedEvent): void {}
 
   getOrdersData() {
-    this._http.get(environment.BASE_API_PATH + "PaymentMaster/GetReportManageOrder").subscribe(res => {
-      if (res.isSuccess) {
-        this.orders = res.data;
-      } else {
-        this._toaster.error(res.errors[0], "Dashboard");
-      }
-    });
+    this._http
+      .get(environment.BASE_API_PATH + 'PaymentMaster/GetReportManageOrder')
+      .subscribe((res) => {
+        if (res.isSuccess) {
+          this.orders = res.data;
+        } else {
+          this._toaster.error(res.errors[0], 'Dashboard');
+        }
+      });
   }
 
   GetOrderStatusChart() {
-    let objOrderStatusData:any[] = [];
-    let arr = ["Date"];
+    let objOrderStatusData: any[] = [];
+    let arr = ['Date'];
 
-    this._http.get(environment.BASE_API_PATH + "PaymentMaster/GetChartOrderStatus").subscribe(res => {
-      if (res.isSuccess) {
-
-        // counts : 5 date: "02-08-2022" orderStatus: "Processing"
-        let allData = res.data;
-        let allDates = allData.map((item: any) => item.date).filter((value: any, index: any, self: string | any[]) => self.indexOf(value) === index);
-        let allOrderStatus = allData.map((item: any) => item.orderStatus).filter((value: any, index: any, self: string | any[]) => self.indexOf(value) === index);
-
-        for (let status of allOrderStatus) {
-          arr.push(status);
-        }
-        objOrderStatusData.push(arr);
-
-        var setZero: any = 0;
-        for (let date of allDates) {
-          arr = [];
-          arr.push(date);
+    this._http
+      .get(environment.BASE_API_PATH + 'PaymentMaster/GetChartOrderStatus')
+      .subscribe((res) => {
+        if (res.isSuccess) {
+          // counts : 5 date: "02-08-2022" orderStatus: "Processing"
+          let allData = res.data;
+          let allDates = allData
+            .map((item: any) => item.date)
+            .filter(
+              (value: any, index: any, self: string | any[]) =>
+                self.indexOf(value) === index
+            );
+          let allOrderStatus = allData
+            .map((item: any) => item.orderStatus)
+            .filter(
+              (value: any, index: any, self: string | any[]) =>
+                self.indexOf(value) === index
+            );
 
           for (let status of allOrderStatus) {
-            arr.push(setZero);
+            arr.push(status);
           }
+          objOrderStatusData.push(arr);
 
+          var setZero: any = 0;
+          for (let date of allDates) {
+            arr = [];
+            arr.push(date);
 
-          for (let i in allOrderStatus) {
-            for (let index in allData) {
-              if (allOrderStatus[i] === allData[index].orderStatus && date === allData[index].date) {
-                arr[parseInt(i) + 1] = allData[index].counts;
+            for (let status of allOrderStatus) {
+              arr.push(setZero);
+            }
+
+            for (let i in allOrderStatus) {
+              for (let index in allData) {
+                if (
+                  allOrderStatus[i] === allData[index].orderStatus &&
+                  date === allData[index].date
+                ) {
+                  arr[parseInt(i) + 1] = allData[index].counts;
+                }
               }
             }
+
+            objOrderStatusData.push(arr);
           }
 
-          objOrderStatusData.push(arr);
-        }
-
-
-        //google-chart - ColumnChart
-        this.orderStatusChart = {
-          chartType: 'ColumnChart',
-          dataTable: objOrderStatusData,
-          options: {
-            legend: { position: 'none' },
-            bars: "vertical",
-            vAxis: {
-              format: "decimal"
+          //google-chart - ColumnChart
+          this.orderStatusChart = {
+            chartType: 'ColumnChart',
+            dataTable: objOrderStatusData,
+            options: {
+              legend: { position: 'none' },
+              bars: 'vertical',
+              vAxis: {
+                format: 'decimal',
+              },
+              height: 340,
+              width: '100%',
+              colors: ['#ff7f83', '#a5a5a5'],
+              backgroundColor: 'transparent',
             },
-            height: 340,
-            width: '100%',
-            colors: ["#ff7f83", "#a5a5a5"],
-            backgroundColor: 'transparent'
-          },
-        };
-
-
-
-      } else {
-        this._toaster.error(res.errors[0], "Dashboard");
-      }
-    });
+          };
+        } else {
+          this._toaster.error(res.errors[0], 'Dashboard');
+        }
+      });
     // //google-chart - ColumnChart
     // this.orderStatusChart = {
     //   chartType: 'ColumnChart',

@@ -4,17 +4,17 @@
             <h5>Brand Logo Master</h5>
         </div>
 
-        <div class="card-body tab2-card">
-            <ul ngbNav #nav="ngbNav" class="nav-tabs" activeId="viewtab" (navChange)="tabChange($event)">
+        <div class="card-body">
+            <ul ngbNav #nav="ngbNav" class="nav nav-tabs mb-4" activeId="viewtab" (navChange)="tabChange($event)">
                 <!-- ADD TAB -->
                 <li ngbNavItem="addtab">
                     <a ngbNavLink>Add</a>
                     <ng-template ngbNavContent>
                         <form [formGroup]="addForm" (ngSubmit)="Submit()">
-                            <!-- Name -->
-                            <div class="form-group row">
-                                <label class="col-xl-3 col-md-4"><span>*</span>Name</label>
-                                <div class="col-xl-8 col-md-7">
+                        <!-- Name -->
+                            <div class="row mb-3">
+                                <label class="col-md-3 col-form-label"><span>*</span>Name</label>
+                                <div class="col-md-7">
                                     <input class="form-control" type="text" formControlName="name" />
                                     <div *ngIf="ctrl['name'].touched && ctrl['name'].invalid" class="text-danger">
                                         <span *ngIf="ctrl['name'].hasError('required')">
@@ -25,9 +25,9 @@
                             </div>
 
                             <!-- Image Upload -->
-                            <div class="form-group row">
-                                <label class="col-xl-3 col-md-4"><span>*</span>Image (Logo)</label>
-                                <div class="col-xl-8 col-md-7">
+                            <div class="row mb-3">
+                                <label class="col-md-3 col-form-label"><span>*</span>Image (Logo)</label>
+                                <div class="col-md-7">
                                     <input class="form-control" type="file" #file (change)="upload(file.files)" />
 
                                     <img [src]="addedImagePath" alt="added Image" class="imagewidth" />

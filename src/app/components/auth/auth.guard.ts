@@ -1,31 +1,31 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
-import { map, Observable } from 'rxjs';
+import {
+  CanActivateChild,
+  ActivatedRouteSnapshot,
+  RouterStateSnapshot,
+  Router,
+  UrlTree,
+} from '@angular/router';
+import { Observable } from 'rxjs';
+import { map, take } from 'rxjs/operators';
 import { AuthService } from './auth.service';
 
-@Injectable({
-  providedIn: 'root'
-})
-export class AuthGuard implements CanActivate {
+@Injectable({ providedIn: 'root' })
+export class AuthGuard implements CanActivateChild {
+  constructor(private _auth: AuthService, private _router: Router) {}
 
-  constructor(
-    private _auth: AuthService,
-    private _router: Router
-  ) { }
-
-  canActivate(
+  canActivateChild(
     route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    this._auth.isLoggedIn$.pipe(
-      map((_isLoggedIn: boolean) => {
-        if (!_isLoggedIn) {
-          this._router.navigate(['auth/login']);
-          return false;
+    state: RouterStateSnapshot
+  ): Observable<boolean | UrlTree> {
+    return this._auth.isLoggedIn$.pipe(
+      take(1),
+      map((isLoggedIn: boolean) => {
+        if (!isLoggedIn) {
+          return this._router.createUrlTree(['/login']);
         }
         return true;
       })
-    )
-    return true;
+    );
   }
-
 }

@@ -143,7 +143,7 @@ export class MenuService {
     },
     {
       title: 'Logout',
-      path: 'auth/login',
+      path: 'login',
       icon: 'log-out',
       type: 'link',
       active: false,
