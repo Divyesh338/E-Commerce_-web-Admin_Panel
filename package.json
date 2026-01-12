@@ -43,6 +43,7 @@
     "@angular/compiler-cli": "^15.2.0",
     "@types/feather-icons": "^4.29.4",
     "@types/jasmine": "~4.3.0",
+    "angular-cli-ghpages": "^2.0.3",
     "gh-pages": "^6.3.0",
     "jasmine-core": "~4.5.0",
     "karma": "~6.4.0",
