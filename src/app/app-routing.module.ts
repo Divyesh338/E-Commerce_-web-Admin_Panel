@@ -7,12 +7,12 @@ const routes: Routes = [
   {
     path: '',
     component: LayoutComponent,
-    children: contentRoutes
-  }
+    children: contentRoutes,
+  },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, { useHash: true })],
   exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
